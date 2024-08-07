@@ -1,0 +1,6 @@
+mu, a simple cli audio player
+
+DEPENDENCIES
+* OpenAL
+* ALUT
+* AudioFile
