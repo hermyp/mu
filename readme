@@ -3,4 +3,10 @@ mu, a simple cli audio player
 DEPENDENCIES
 * OpenAL
 * ALUT
-* AudioFile
+
+VERSIONS
+0.1, 08.08.2024
+    featuring:
+    .wav file play,
+    files queue,
+    verbose option
