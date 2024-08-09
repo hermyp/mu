@@ -21,26 +21,11 @@ int main(int argc, char *argv[]) {
     bool verbose = argVerbose(argc, argv);
     Loaders loaders;
     std::vector<Audiofile> audiofiles = getAudiofilesFromFilenames(argFilenames(argc, argv), &loaders);
-    Player player;
-
-    ALenum error;
-    alGetError();
-// Gen source
-    ALuint source;
-    alGenSources(1, &source);
-    error = alGetError();
-    if(error) {
-        std::cout << "[ERROR] alGenBuffers: " << alGetString(error) << "\n";
-        return 0;
-    }
-    alSourcef(source, AL_PITCH, 1);
-    alSourcef(source, AL_GAIN, 1);
-    alSource3f(source, AL_POSITION, 0, 0, 0);
-    alSource3f(source, AL_VELOCITY, 0, 0, 0);
-    alSourcei(source, AL_LOOPING, AL_FALSE);
 // Play
+    Player player;
+    if(!player.isUsable()) return 0;
     for(int i = 0; i < audiofiles.size(); i++)
-    {   player.play(audiofiles[i], &source, verbose);
+    {   player.play(audiofiles[i], verbose);
     }
     if(verbose) std::cout << "[PLAY] End of queue\n";
 }

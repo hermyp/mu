@@ -9,8 +9,14 @@ class Player {
 public:
     Player();
     ~Player();
-    void play(Audiofile audiofile, unsigned int *source, bool verbose);
+    bool isUsable();
+    void play(Audiofile audiofile, bool verbose);
 private:
+    bool buffer_source(unsigned int buffer, bool verbose);
+    bool ubuffer_source(bool verbose);
+private:
+    bool errors = false;
     ALCdevice *device;
     ALCcontext *context;
+    ALuint source;
 };
