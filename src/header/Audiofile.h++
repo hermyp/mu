@@ -1,10 +1,9 @@
 #pragma once
 
-#include <string>
+#include "Loader.h++"
+#include "fileformats.h++"
 
-#define FILEFORMAT_NOT_SUPPORTED -1
-#define FILEFORMAT_UNKNOWN 0
-#define FILEFORMAT_WAV 1
+#include <string>
 
 class Audiofile {
 // filename
@@ -16,6 +15,12 @@ private:
     std::string filename = "";
 
 // file loader
+public:
+    void setLoader(Loader *loader);
+    bool loadBuffer(bool verbose);
+private:
+    bool loader_is_provided = false;
+    Loader *loader;
 
 // fileformat
 public:

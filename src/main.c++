@@ -1,13 +1,17 @@
+#include "Loaders.h++"
 #include "Player.h++"
 #include "arg.h++"
 
 #include <AL/al.h>
 #include <iostream>
 
-std::vector<Audiofile> getAudiofilesFromFilenames(std::vector<std::string> filenames)
+std::vector<Audiofile> getAudiofilesFromFilenames(std::vector<std::string> filenames, Loaders *loaders)
 {   std::vector<Audiofile> audiofiles;
     for(int i = 0; i < filenames.size(); i++)
-        audiofiles.push_back(Audiofile().setFilename(filenames[i]));
+    {   Audiofile audiofile = Audiofile().setFilename(filenames[i]);
+        audiofile.setLoader(&loaders->wav_loader);
+        audiofiles.push_back(audiofile);
+    }
     return audiofiles;
 }
 
@@ -15,14 +19,8 @@ int main(int argc, char *argv[]) {
     if(argHelp(argc, argv)) return 0;
     if(argVersion(argc, argv)) return 0;
     bool verbose = argVerbose(argc, argv);
-    /*
-    std::vector<std::string> filenames = argFilenames(argc, argv);
-    if(filenames.size() == 0)
-    {   std::cout << "[ERROR] No files provided\n";
-        return 0;
-    }
-    */
-    std::vector<Audiofile> audiofiles = getAudiofilesFromFilenames(argFilenames(argc, argv));
+    Loaders loaders;
+    std::vector<Audiofile> audiofiles = getAudiofilesFromFilenames(argFilenames(argc, argv), &loaders);
     Player player;
 
     ALenum error;
